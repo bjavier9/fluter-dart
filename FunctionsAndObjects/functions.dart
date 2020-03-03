@@ -4,7 +4,24 @@ main() {
   myName();
   funcionFlecha('Javier Bolsa', 'la calle');
   print(retornoEntero());
+  print(getNumero(6));
 }
+int getNumero(int numero){
+  if(numero > 1){
+      return numero * getNumero(numero - 1);
+
+
+  }else  return 1;
+}
+
+int getRecurse(int num)
+{
+ if (num > 1) {
+ print("In getRecurse and num is $num");
+ return num * getRecurse(num - 1);
+ } else return 1;
+}
+
 void noRetornoNada(){
   print("No retorno Nada");
 }
