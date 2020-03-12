@@ -22,6 +22,21 @@ class Car implements Vehicle,Engine {
  }
  void ridingExperience() => print("This car gives good ride,because it is an ${this._name}");
 }
+
+class OrderDetail {
+  void UpdateCustomers(){}
+  void TakeOrder(){}
+}
+
+class ItemDetails implements OrderDetail {
+  void UpdateCustomers(){
+    print("Updating customers");
+  }
+  void TakeOrder(){
+    print("Taking order from customers.");
+  }
+}
+
 main(List<String> arguments){
  var car = Car();
  car._name = "Opel";
@@ -29,4 +44,7 @@ main(List<String> arguments){
  car.steerTheVehicle();
  car.lessOilConsumption();
  car.ridingExperience();
+ var book = ItemDetails();
+ book.TakeOrder();
+ book.UpdateCustomers();
 }
