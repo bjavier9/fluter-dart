@@ -24,16 +24,32 @@ class Car implements Vehicle,Engine {
 }
 
 class OrderDetail {
+  //int age; error
+  void anyNormalFunction(int age){
+    print('this is a normal function to know the $age');
+  }
   void UpdateCustomers(){}
   void TakeOrder(){}
 }
+abstract class CustomerDetails{
+  void Customer(){
+    //print('List of customer');
+  }
+}
 
-class ItemDetails implements OrderDetail {
+class ItemDetails extends CustomerDetails implements OrderDetail {
+  
+  void anyNormalFunction(int age){
+    print("This is a normal function to know the age: $age.");
+  }
   void UpdateCustomers(){
-    print("Updating customers");
+    // print("Updating customers");
   }
   void TakeOrder(){
-    print("Taking order from customers.");
+    // print("Taking order from customers.");
+  }
+  void Customer(){
+
   }
 }
 
@@ -45,6 +61,7 @@ main(List<String> arguments){
  car.lessOilConsumption();
  car.ridingExperience();
  var book = ItemDetails();
- book.TakeOrder();
- book.UpdateCustomers();
+ //book.TakeOrder();
+ //book.UpdateCustomers();
+ book.anyNormalFunction(122);
 }
