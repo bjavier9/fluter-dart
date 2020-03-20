@@ -1,13 +1,22 @@
 main() {
-  var perfil =Registro(88961629, 'javier','2345-4564');
+  var perfil =Registro();
   perfil.tipo=4;
   perfil.SetPrecio=23.23;
-  perfil.Register();
+  perfil.Registrando(88961624, 'javier1','2345-4534');  
+  perfil.Registrando(88961629, 'javier','2345-4564');  
+  perfil.Registrando(88961629, 'javier2','2545-6534');
+  perfil.Actualizar(88961629, {'nombre':'Josue'});
+  Future.delayed(
+    Duration(seconds: 10),(){ 
+  perfil.Borrar(88961629);
+  print(perfil.BuscarRegistro('javier'));
   print(perfil.Clientes);
   print(perfil.TipoPersona());
   print(perfil.GetPrecio);
   String playerName(String name) => name ?? 'Guest';
   print(playerName(null));
+    });
+ 
 }
 
 //interfaces
@@ -27,7 +36,7 @@ class Acciones implements Cuenta{
   int tipo;
  
 
-    Acciones(this.cedula, this.persona);    
+    Acciones();    
     double get GetPrecio => precio;
     set SetPrecio(double costo)=>precio=costo;
 
@@ -59,26 +68,32 @@ class Registro extends Acciones{
   String telefono;
    List<Map<String, dynamic>> Clientes= List<Map<String, dynamic>>();
   List<Map<int, dynamic>> Facturas;
-  Registro(int cedula, String persona, this.telefono) : super(cedula, persona);
+  Registro();
   
-  Future<String> Register(){
+  Future<String> Register(int cedula, String telefono, String persona){
 
   Future<String> delayingTenSecond = Future.delayed(
     Duration(seconds: 10),(){
       Clientes.add({
         'id':Clientes==null?1:Clientes.length+1,
-        "ced":super.cedula,
-        "nombre":super.persona,
-        "telefono":this.telefono
+        "ced":cedula,
+        "nombre":persona,
+        "telefono":telefono
       });
       return "Registrado";
     }
   );
 return delayingTenSecond;
 }
-  void Registrando() async{
-  String displayNewsHeadlines= await Register();
+  void Registrando(int cedula, String telefono, String persona) async{
+  String displayNewsHeadlines= await Register(cedula, telefono, persona);
   print(displayNewsHeadlines);
+  print(Clientes);
+  }
+  void Actualizar(int cedula, Map<String, dynamic> datos) async{
+  bool displayNewsHeadlines= await Actualizando(cedula, datos);
+  print(displayNewsHeadlines);
+  print(Clientes);
   }
 
 Future<bool> Actualizando (int cedula, Map<String, dynamic> datos){
@@ -105,6 +120,7 @@ return respuesta;
 
 void Borrar(int ced){
   Clientes.removeWhere((user)=>user['ced']==ced);
+  print(Clientes);
   print('Borrado');
 }
 List<Map<String, dynamic>> BuscarRegistro(String persona){
