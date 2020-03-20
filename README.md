@@ -3,5 +3,7 @@ Developers around the world use Dart to create high-quality apps for iOS and And
 
 
 <a href="https://www.apress.com/gp/book/9781484255612"><img src="https://images.springer.com/sgw/books/medium/9781484255612.jpg" title="FVCproductions" alt="FVCproductions"></a>
+<a href="https://www.apress.com/la/book/9781484249819"><img src="https://images.springer.com/sgw/books/medium/9781484249819.jpg" title="FVCproductions" alt="FVCproductions"></a>
+
 
 
