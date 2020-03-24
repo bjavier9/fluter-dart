@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:couter_app/fancy_button.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -45,47 +46,12 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class FancyButton extends StatefulWidget {
-  final VoidCallback onPressed;
-  final Widget child;
-  const FancyButton({Key key, this.onPressed, this.child}) : super(key: key);
-  @override
-  _FancyButtonState createState() => _FancyButtonState();
-}
 
-class _FancyButtonState extends State<FancyButton> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: RaisedButton(
-        color: _getColors(),
-        child: widget.child,
-        onPressed: widget.onPressed,
-      ),
-    );
-  }
-
-  Color _getColors() {
-    return _buttonColors.putIfAbsent(this, () => colors[next(0, 5)]);
-  }
-}
-
-Map<_FancyButtonState, Color> _buttonColors = {};
-final _random = Random();
-int next(int min, int max) => min + _random.nextInt(max - min);
-List<Color> colors = [
-  Colors.blue,
-  Colors.green,
-  Colors.orange,
-  Colors.purple,
-  Colors.amber,
-  Colors.lightBlue,
-];
 
 class _MyHomePageState extends State<MyHomePage> {
   bool _reversed = false;
-  String _nImagen ='Untitled.png';
-  List<UniqueKey> _buttonKeys = [UniqueKey(), UniqueKey()];
+  String _nImagen = 'Untitled.png';
+   List<UniqueKey> _buttonKeys = [UniqueKey(), UniqueKey()];
   int _counter = 0;
 
   void _incrementCounter() {
@@ -95,8 +61,8 @@ class _MyHomePageState extends State<MyHomePage> {
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
-     if(_counter>=10){
-        _nImagen='Untitled3.png';
+      if (_counter >= 10) {
+        _nImagen = 'Untitled3.png';
       }
       _counter++;
     });
@@ -104,10 +70,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _decrementCounter() {
     setState(() {
-    
       _counter--;
-      if(_counter<=0){
-        _nImagen='Untitled2.png';
+      if (_counter <= 0) {
+        _nImagen = 'Untitled2.png';
       }
     });
   }
@@ -115,19 +80,27 @@ class _MyHomePageState extends State<MyHomePage> {
   void _resetCounter() {
     setState(() {
       _counter = 0;
-      _nImagen='Untitled.png';
-    } );
+      _nImagen = 'Untitled.png';
+    });
+    _swap();
+  }
+
+  void _swap() {
+    setState(() {
+      _reversed = !_reversed;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final incrementButton = FancyButton(
+ final incrementButton = FancyButton(
       child: Text(
         "Increment",
         style: TextStyle(color: Colors.white),
       ),
       onPressed: _incrementCounter,
     );
+
     final decrementButton = FancyButton(
       child: Text(
         "Decrement",
@@ -135,7 +108,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       onPressed: _decrementCounter,
     );
-    List<Widget> _buttons = <Widget>[incrementButton, decrementButton];
+
+    var _buttons = <Widget>[incrementButton, decrementButton];
+
     if (_reversed) {
       _buttons = _buttons.reversed.toList();
     }
@@ -180,33 +155,35 @@ class _MyHomePageState extends State<MyHomePage> {
                   borderRadius: BorderRadius.circular(4.0)),
               child: Image.asset(
                 _nImagen,
-                width: 300.0,
+                width: 100.0,
               ),
             ),
             Text(
               'Cantidad de veces que tocastes el boton:',
             ),
             Text(
-              '$_counter',
+              _counter.toString(),
               style: Theme.of(context).textTheme.display1,
             ),
             Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  RaisedButton(
-                      color: Colors.red,
-                      child: Text('Decremento',
-                          style: TextStyle(color: Colors.white)),
-                      onPressed: _decrementCounter),
-                  RaisedButton(
-                    color: Colors.green,
-                    child: Text(
-                      "Increment",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: _incrementCounter,
-                  )
-                ]),
+                 children: _buttons
+                // children: <Widget>[
+                //   RaisedButton(
+                //       color: Colors.red,
+                //       child: Text('Decremento',
+                //           style: TextStyle(color: Colors.white)),
+                //       onPressed: _decrementCounter),
+                //   RaisedButton(
+                //     color: Colors.green,
+                //     child: Text(
+                //       "Increment",
+                //       style: TextStyle(color: Colors.white),
+                //     ),
+                //     onPressed: _incrementCounter,
+                //   )
+                // ]
+                ),
           ],
         ),
       ),
