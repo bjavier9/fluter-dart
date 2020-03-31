@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:peliculas/src/models/actores_models.dart';
 import 'package:peliculas/src/models/peliculas_models.dart';
 import 'package:http/http.dart' as http;
 class PeliculaProvider{
@@ -60,4 +61,33 @@ Stream<List<Pelicula>> get popularesStream => _popularesStreamController.stream;
     return resp;
 
   }
+
+ 
+  Future<List<Actor>> getCast( String peliId ) async {
+
+    final url = Uri.https(_url, '3/movie/$peliId/credits', {
+      'api_key'  : _apiKey,
+      'language' : _lenguaje
+    });
+
+    final resp = await http.get(url);
+    final decodedData = json.decode( resp.body );
+
+    final cast = new Cast.fromJsonList(decodedData['cast']);
+
+    return cast.actores;
+
+  }
+   Future<List<Pelicula>> buscarPelicula( String query ) async {
+
+    final url = Uri.https(_url, '3/search/movie', {
+      'api_key'  : _apiKey,
+      'language' : _lenguaje,
+      'query'    : query
+    });
+
+    return await _procesarRespuesta(url);
+
+  }
+
 }
