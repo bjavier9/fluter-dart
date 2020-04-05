@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qreaderapp/src/pages/home_pages.dart';
+import 'package:qreaderapp/src/pages/mapa_page.dart';
  
 void main() => runApp(MyApp());
  
@@ -11,7 +12,8 @@ class MyApp extends StatelessWidget {
       title: 'QReader',
      initialRoute: 'home',
      routes: {
-       'home':(BuildContext context)=>HomePage()
+       'home':(BuildContext context)=>HomePage(),
+       'mapa':(BuildContext context)=>MapaPage()
      },
      theme: ThemeData(
        primaryColor: Colors.deepPurple
