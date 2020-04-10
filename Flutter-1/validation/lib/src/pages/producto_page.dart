@@ -192,8 +192,12 @@ class _ProductoPageState extends State<ProductoPage> {
   }
 
   _procesarImagen( ImageSource tipo) async{
-      foto = await ImagePicker.pickImage(source: tipo);
-    if (foto != null) {}
+      foto =await ImagePicker.pickImage(
+      source: tipo
+    );
+    if (foto != null) {
+        producto.fotoUrl = null;
+    }
     setState(() {});
   }
 }

@@ -49,9 +49,29 @@ final productoProvider = new ProductoProvider();
         productoProvider.borrarProducto(producto.id);
       },
       child: Card(
+         elevation: 5.0,
+      shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(10.0) ),
         child: Column(
           children: <Widget>[
-
+        Row(
+          children: <Widget>[
+            
+          SafeArea(
+                          child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(producto.id , style: TextStyle(fontWeight: FontWeight.bold),),
+                 Text(producto.disponible.toString())
+                ],
+              ),
+            ),
+            Spacer(),
+            IconButton(
+              icon: Icon(Icons.more_vert),
+              onPressed: () =>null,
+            )
+          ],
+        ),
             ( producto.fotoUrl == null ) 
               ? Image(image: AssetImage('assets/images.png'))
               : FadeInImage(
@@ -65,9 +85,26 @@ final productoProvider = new ProductoProvider();
             ListTile(
               title: Text('${ producto.titulo } - ${ producto.valor }'),
               subtitle: Text( producto.id ),
-              onTap: () => Navigator.pushNamed(context, 'producto', arguments: producto ),
+              onTap: (){Navigator.pushNamed(context, 'producto', arguments: producto );
+                  print('presionastez');
+              } ,
             ),
-
+  Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            IconButton(
+              padding: EdgeInsets.zero,
+              iconSize: 28.0,
+              icon: Icon(Icons.delete),
+              onPressed:(){},
+            ),
+            IconButton(
+              padding: EdgeInsets.zero,
+              iconSize: 28.0,
+              icon: Icon(Icons.edit),
+              onPressed:(){},
+            ),
+            Spacer()])
           ],
         ),
       )
