@@ -5,32 +5,35 @@ import 'package:validation/src/models/producto_models.dart';
 import 'package:validation/src/providers/producto_provider.dart';
 
 class HomePage extends StatelessWidget {
-final productoProvider = new ProductoProvider();
+// final productoProvider = new ProductoProvider();
+
+
   @override
   Widget build(BuildContext context) {
   
    final bloc =Provider.of(context);
-    
+  final productobloc = Provider.productosBloc(context);
+  productobloc.cargarProducto();    
 
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Home')
       ),
-      body:_crearListado(),
+      body:_crearListado(productobloc),
       floatingActionButton: _crearBoton(context),
     );
   }
-  Widget _crearListado(){
-    return FutureBuilder(
-      future: productoProvider.cargarProductos(),
-      
-      builder: (BuildContext context, AsyncSnapshot<List<ProductoModel>> snapshot) {
+  Widget _crearListado(ProductosBloc productosbloc){
+
+    return StreamBuilder(
+      stream:productosbloc.productosStream,
+      builder: (BuildContext context,AsyncSnapshot<List<ProductoModel>> snapshot){
         if(snapshot.hasData){
           final productos = snapshot.data;
           return ListView.builder(
               itemCount: snapshot.data.length,
-              itemBuilder: (context, i)=>_crearItem(context,productos[i]),
+              itemBuilder: (context, i)=>_crearItem(context,productos[i], productosbloc),
           );
         }else{
           return Center(child: CircularProgressIndicator(),);
@@ -38,7 +41,7 @@ final productoProvider = new ProductoProvider();
       },
     );
   }
-  Widget _crearItem(BuildContext context,ProductoModel producto){
+  Widget _crearItem(BuildContext context,ProductoModel producto, ProductosBloc productosBloc){
 
     return Dismissible(
       key: UniqueKey(),
@@ -46,7 +49,7 @@ final productoProvider = new ProductoProvider();
         color: Colors.red,
       ),
       onDismissed: ( direccion ){
-        productoProvider.borrarProducto(producto.id);
+      productosBloc.borrarProducto(producto.id);
       },
       child: Card(
          elevation: 5.0,
